@@ -1,0 +1,46 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 offset-sm-4">
+      <h1  style='font-size: 25px; text-align: center'> Create a new Invoice </h1>
+      <div data-controller="invoice">
+          <%= simple_form_for(@expenses) do |f| %>
+              <%= f.input :name %>
+
+              <%= label :category_id, "Category" %>
+              <%= select_tag :category_id,
+              options_from_collection_for_select(@categories, "id", "name"),
+              include_blank: true,
+              class: "form-control"%>
+
+                </br>
+              <%= f.input :date,
+              as: :string,
+              required: true,
+              autofocus: true,
+              class:"form-control",
+              input_html: { class: "datepicker_full"} %>
+
+              <%= f.input :price%>
+
+              
+                <br/>
+
+
+        <div id="myList">
+        
+        <div data-invoice-target="other" >
+        </div>
+        
+        </div>
+
+                
+
+
+              <%= f.submit "Save", class: "btn btn-primary" %>
+          <% end %>
+
+      </div>
+
+    </div>  
+  </div>
+</div>

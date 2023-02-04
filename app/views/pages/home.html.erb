@@ -1,0 +1,32 @@
+
+<%if UserAccessCompany.where(user_id: current_user.id).nil?%>
+<%=link_to "Create Company", new_company_path%>
+
+<%else%>
+<p> Factures non payées  - <a href="/invoices"> Voir plus  </a></p>
+<ul>
+    <% @invoices_top_5.each do |invoice| %>
+        <li><a href="/companies/<%=invoice.entity.company.id%>/invoices/<%=invoice.id%>"> <%= invoice.invoice_name%> </a> - Date de Paiement: <%= invoice.invoice_date%></li>
+    <%end%>
+</ul>
+
+</br></br>
+
+</br></br>
+
+
+
+<%= column_chart Invoice.where(:entity_id => @entities.ids, is_paid: [false, nil]).group_by_day(:payment_date).count, title: "Facture par Date de Paiement" %> 
+
+</br></br>
+
+<%= column_chart @data_count, stacked: true, title: "Nombre de Factures par statut" %> 
+
+</br></br>
+
+<%= column_chart @data_amount, stacked: true, title: "Nombre de Factures par montant" %> 
+
+</br></br>
+
+<%= line_chart @data_all, title: "Revenus" %>
+<%end%>
